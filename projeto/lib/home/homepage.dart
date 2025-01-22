@@ -18,66 +18,74 @@ class _MyWidgetState extends State<MyWidget> {
   @override
   Widget build(BuildContext context) {
     var provider = context.watch<ProviderAtt>();
-    return Container(
-      margin: const EdgeInsets.all(20),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "Bem Vindo",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(
-              height: 30,
-            ),
-            TextField(
-              controller: controller1,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: const InputDecoration(
-                prefixIcon: Icon(
-                  Icons.attach_money,
-                  color: Colors.green,
+
+    double larguraDaTela = MediaQuery.of(context).size.width;
+    double alturaDaTela = MediaQuery.of(context).size.height;
+    double fontSize = larguraDaTela * 0.05; 
+    double paddingHome = larguraDaTela * 0.05;
+    double botaoAltura = alturaDaTela * 0.07;
+    double botaoLargura = larguraDaTela * 0.07;
+
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(paddingHome),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Bem Vindo",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: alturaDaTela * 0.03),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: paddingHome),
+                child: TextField(
+                  style: TextStyle(fontSize: fontSize * 0.8),
+                  controller: controller1,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.attach_money, color: Colors.green),
+                    labelText: "Total das compras",
+                    border: OutlineInputBorder(),
+                  ),
                 ),
-                labelText: "total das compras",
-                border: OutlineInputBorder(),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              controller: controller2,
-              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.attach_money_outlined, color: Colors.red),
-                labelText: "valor pago",
-                border: OutlineInputBorder(),
+              SizedBox(height: alturaDaTela * 0.02),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: paddingHome),
+                child: TextField(
+                  keyboardType: TextInputType.number,
+                  style: TextStyle(fontSize: fontSize * 0.8),
+                  controller: controller2,
+                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.attach_money_outlined, color: Colors.red),
+                    labelText: "Valor pago",
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  alignment: Alignment.center,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)),
-                  fixedSize: const Size(250, 50)),
-              onPressed: () {
-                provider.calculargorjeta(controller1, controller2);
-                controller1.clear();
-                controller2.clear();
-              },
-              child: const Text("calcular"),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            resultwidget(provider: provider),
-          ],
+              SizedBox(height: alturaDaTela * 0.04),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  fixedSize: Size(botaoLargura*2, botaoAltura*2),
+                ),
+                onPressed: () {
+                  provider.calculargorjeta(controller1, controller2);
+                  controller1.clear();
+                  controller2.clear();
+                },
+                child: Text("Calcular", style: TextStyle(fontSize: fontSize * 0.6)),
+              ),
+              SizedBox(height: alturaDaTela * 0.02),
+              resultwidget(provider: provider),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
