@@ -62,12 +62,13 @@ class resultwidget extends StatelessWidget {
       duration: const Duration(microseconds: 7),
       child: RichText(
         text: TextSpan(
-          style: const TextStyle(fontSize: 20, color: Colors.black),
+          style: const TextStyle(fontSize: 40, color: Colors.black),
           children: [
-            provider.dados.isNotEmpty?TextSpan(text:  "digite algum numero"): TextSpan(text: "valor da gorjeta é "),
+            TextSpan(text: "valor da gorjeta é: "),
             TextSpan(
               text: "${provider.showResult()}",
               style: TextStyle(
+
                 color: provider.showResult()! > 0 ? Colors.green : Colors.red,
               ),
             ),
